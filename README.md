@@ -4,7 +4,7 @@
 
 Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I designed a move to Azure using Container Apps, managed MySQL, and Service Bus to keep invoicing available during a notification outage and recover records from backup after a database failure. Implementation and Azure validation are planned.
 
-![Cedar Row Office Supply · Azure Cloud Infrastructure & Landing Zone, with an illustration of warehouse shelves](docs/assets/cedar-row-header.png)
+![Cedar Row Office Supply · Azure Cloud Infrastructure & Landing Zone, with an illustration of warehouse shelves](docs/assets/cedar-row-banner.png)
 
 **Design scope** · 7 architecture views · 4 Azure resource groups · 2 independent application release paths
 
