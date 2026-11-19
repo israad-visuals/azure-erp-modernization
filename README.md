@@ -8,15 +8,17 @@ I designed an Azure architecture for Cedar Row Office Supply, a fictional wholes
 
 **Design scope** · 7 architecture views · 4 Azure resource groups · 2 independent application release paths
 
-[Business context](#business-context) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan)
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan)
 
 ## Business context
 
 Cedar Row Office Supply is a fictional Toronto wholesaler with several sales offices and a shared warehouse. It sells paper, toner, and other office supplies to local businesses. Staff across the company rely on one ERP to check what is in stock, post invoices, and keep sales and accounting records in sync.
 
-If one server failure takes the ERP offline, every office can lose access at once. Sales staff may have to hold orders they cannot confirm, the warehouse can miss shipments, and delayed invoices can slow down payments.
+## Business problem
 
-I designed invoice posting to continue if the notification service fails, with pending notifications saved for when it recovers. The disaster recovery plan covers a more serious outage. Restore the database from backup, verify invoices, stock, and accounting records, and measure how quickly staff can get back to work.
+In this scenario, Cedar Row runs its ERP and database on one physical server at the warehouse. A hardware failure, a power outage at the warehouse, or maintenance on that server can cut off every office at once. Sales staff lose access to live stock counts, the warehouse can miss shipments, and delayed invoices can slow down payments.
+
+Cedar Row needs the ERP to stay available during business hours and a way to recover its records after a serious outage. I designed the move to Azure to take the ERP off the warehouse hardware, keep invoicing running if the notification worker fails, and use managed database backups. The disaster recovery plan restores the database to a separate server and checks invoices, stock, and accounting records before staff resume work.
 
 ## My contribution
 
