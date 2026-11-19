@@ -4,9 +4,9 @@
 
 I designed an Azure architecture for Cedar Row Office Supply, a fictional wholesaler that sells office supplies to local businesses. Posting an invoice needs to update sales, stock, and accounting together, even if the notification service is unavailable. I used Azure Container Apps, MySQL, and Service Bus in the design so the ERP can record the sale and a separate .NET worker can process the notification later. Implementation and Azure validation are planned.
 
-![Cedar Row Office Supply · Azure Cloud Infrastructure & Landing Zone](docs/assets/cedar-row-header.png)
+![Cedar Row Office Supply · Azure Cloud Infrastructure & Landing Zone, with an illustration of warehouse shelves](docs/assets/cedar-row-header.png)
 
-![Project at a glance. Seven architecture views, four Azure resource groups, and two independent application release paths.](docs/assets/project-at-a-glance.svg)
+**Design scope** · 7 architecture views · 4 Azure resource groups · 2 independent application release paths
 
 [Business context](#business-context) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan)
 
