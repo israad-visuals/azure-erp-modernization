@@ -12,9 +12,11 @@ I designed an Azure architecture for Cedar Row Office Supply, a fictional wholes
 
 ## Business context
 
-Cedar Row starts with ten cartons of office paper and sells two at $15 each. When staff post the invoice, the ERP should record a $30 sale, leave eight cartons in stock, and update the accounting records. The customer can pay later. Sales, warehouse, and accounting staff work from the same transaction.
+Cedar Row Office Supply is a fictional Toronto wholesaler with several sales offices and a shared warehouse. It sells paper, toner, and other office supplies to local businesses. Staff across the company rely on one ERP to check what is in stock, post invoices, and keep sales and accounting records in sync.
 
-I kept invoice posting and its related stock and accounting changes together in MySQL. The same transaction records an event for the notification. A scheduled Container Apps job publishes that event to Service Bus. The .NET worker processes it and saves a receipt in Azure Table Storage.
+If one server failure takes the ERP offline, every office can lose access at once. Sales staff may have to hold orders they cannot confirm, the warehouse can miss shipments, and delayed invoices can slow down payments.
+
+I designed invoice posting to continue if the notification service fails, with pending notifications saved for when it recovers. The disaster recovery plan covers a more serious outage. Restore the database from backup, verify invoices, stock, and accounting records, and measure how quickly staff can get back to work.
 
 ## My contribution
 
@@ -44,7 +46,7 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 ## Validation plan
 
-1. Post the sample invoice locally and check the total, remaining stock, and accounting entries.
+1. Post an invoice for two cartons at $15 each. Verify a $30 invoice, eight cartons remaining from ten, and the corresponding accounting entries.
 2. Pause the notification worker in Azure. Post another invoice and verify it succeeds. Restart the worker and trace the event to its receipt.
 3. Deliver the same event twice and verify that it produces one receipt.
 4. Roll back the ERP and worker independently. Restore MySQL to a separate server and verify the restored records before teardown.
