@@ -1,4 +1,4 @@
-# Azure Enterprise Resource Planning Modernization for a Wholesale Distributor
+# Azure Cloud Enterprise Resource Planning Modernization for a Wholesale Distributor
 
 ## Executive summary
 

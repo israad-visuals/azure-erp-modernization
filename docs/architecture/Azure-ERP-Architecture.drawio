@@ -7,7 +7,7 @@
         <mxCell id="background" parent="1" style="whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=none;movable=0;resizable=0;selectable=0;" value="" vertex="1">
           <mxGeometry height="900" width="1600" as="geometry" />
         </mxCell>
-        <mxCell id="title" parent="1" style="whiteSpace=wrap;html=1;text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=34;fontColor=#17365D;fontStyle=1;spacing=0;" value="Azure Enterprise Resource Planning Modernization for a Wholesale Distributor" vertex="1">
+        <mxCell id="title" parent="1" style="whiteSpace=wrap;html=1;text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=34;fontColor=#17365D;fontStyle=1;spacing=0;" value="Azure Cloud Enterprise Resource Planning Modernization for a Wholesale Distributor" vertex="1">
           <mxGeometry height="46" width="1460" x="64" y="38" as="geometry" />
         </mxCell>
         <mxCell id="subtitle" parent="1" style="whiteSpace=wrap;html=1;text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontFamily=Helvetica;fontSize=17;fontColor=#52718B;fontStyle=0;spacing=0;" value="High-level landing zone" vertex="1">
