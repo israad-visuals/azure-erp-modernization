@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="132" viewBox="0 0 1200 132" role="img" aria-labelledby="title description">
+  <title id="title">Project at a glance</title>
+  <desc id="description">Seven architecture views, four Azure resource groups, and two independent application release paths.</desc>
+  <rect width="1200" height="132" fill="#ffffff"/>
+  <path d="M0 2h1200" stroke="#123d31" stroke-width="4"/>
+  <path d="M1 4v127h1198V4M320 30v72M611 30v72M902 30v72" fill="none" stroke="#c7d4cc"/>
+  <text x="39" y="77" fill="#123d31" font-family="Georgia, Times New Roman, serif" font-size="32">Project at a glance</text>
+  <g fill="#123d31" font-family="Georgia, Times New Roman, serif" font-size="49">
+    <text x="350" y="70">7</text>
+    <text x="641" y="70">4</text>
+    <text x="932" y="70">2</text>
+  </g>
+  <g fill="#344b41" font-family="Arial, Helvetica, sans-serif" font-size="20">
+    <text x="352" y="98">Architecture views</text>
+    <text x="643" y="98">Azure resource groups</text>
+    <text x="934" y="98">Application release paths</text>
+  </g>
+</svg>

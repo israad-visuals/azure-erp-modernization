@@ -6,9 +6,11 @@ Cedar Row Office Supply is a fictional wholesaler whose offices share one on-pre
 
 ![Cedar Row Office Supply · Azure Cloud Infrastructure & Landing Zone, with an illustration of warehouse shelves](docs/assets/cedar-row-banner.png)
 
-**Design scope** · 7 architecture views · 4 Azure resource groups · 2 independent application release paths
+![Project at a glance. Seven architecture views, four Azure resource groups, and two independent application release paths.](docs/assets/project-at-a-glance.svg)
 
-[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan)
+[![Deployment evidence. Azure deployment is planned.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
+
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Deployment evidence](#deployment-evidence)
 
 ## Business context
 
@@ -53,4 +55,6 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 3. Deliver the same event twice and verify that it produces one receipt.
 4. Roll back the ERP and worker independently. Restore MySQL to a separate server and verify the restored records before teardown.
 
-The repository currently contains the design and its validation plan.
+## Deployment evidence
+
+Azure deployment is planned. This section will hold the Terraform apply output, Azure resource screenshots, and results from the invoice and recovery checks after the deployment is verified.
