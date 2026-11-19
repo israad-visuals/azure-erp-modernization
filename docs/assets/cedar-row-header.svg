@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="230" viewBox="0 0 1200 230" role="img" aria-labelledby="heading description">
+  <title id="heading">Cedar Row Office Supply</title>
+  <desc id="description">A wholesale distributor in Toronto with an illustration of an invoice and a carton of paper.</desc>
+  <rect x="1" y="1" width="1198" height="228" rx="20" fill="#f6f8fa" stroke="#c9e9df" stroke-width="2"/>
+  <path d="M837 1h342a20 20 0 0 1 20 20v188a20 20 0 0 1-20 20H837z" fill="#e6f5ef"/>
+  <path d="M837 1v228" stroke="#c9e9df" stroke-width="2"/>
+  <g font-family="Arial, Helvetica, sans-serif">
+    <text x="52" y="103" fill="#102136" font-size="50" font-weight="700">Cedar Row Office Supply</text>
+    <text x="55" y="151" fill="#42566c" font-size="25">Wholesale distributor · Toronto</text>
+  </g>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M905 113l90-36 90 36-90 37z" fill="#d0ecdf" stroke="#167255" stroke-width="2"/>
+    <path d="M905 113v60l90 34v-57z" fill="#edfaf4" stroke="#167255" stroke-width="2"/>
+    <path d="M1085 113v60l-90 34v-57z" fill="#b8e3ce" stroke="#167255" stroke-width="2"/>
+    <path d="M952 94l89 36v26" stroke="#167255" stroke-width="2"/>
+    <rect x="1011" y="33" width="113" height="103" rx="10" fill="#ffffff" stroke="#167255" stroke-width="2"/>
+    <path d="M1032 57h40m-40 17h71m-71 13h71m-71 13h35" stroke="#82bda8" stroke-width="3"/>
+    <path d="M1084 113h20" stroke="#167255" stroke-width="3"/>
+  </g>
+</svg>
