@@ -6,7 +6,7 @@ Cedar Row Office Supply is a fictional wholesaler whose offices share one on-pre
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
-![Project at a glance. Seven architecture views, four Azure resource groups, and two independent application release paths.](docs/assets/project-at-a-glance.svg)
+![Project at a glance. Architecture with seven views, Azure layout with four resource groups, release design with two paths, and planned Azure validation.](docs/assets/project-path.svg)
 
 [![Deployment evidence. Azure deployment is planned.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
 

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="196" viewBox="0 0 1200 196" role="img" aria-labelledby="title description">
+  <title id="title">Project at a glance</title>
+  <desc id="description">Architecture with seven views, Azure layout with four resource groups, release design with two paths, and planned Azure validation.</desc>
+  <style>
+    @media (prefers-reduced-motion: no-preference) {
+      .route-highlight { animation: trace 3.2s ease-in-out both; }
+    }
+    @keyframes trace {
+      from { stroke-dashoffset: 1; }
+      to { stroke-dashoffset: 0; }
+    }
+  </style>
+  <defs>
+    <path id="design-route" pathLength="1" d="M142 103H255C305 103 318 88 368 88H487C541 88 553 103 607 103H727"/>
+  </defs>
+  <rect width="1200" height="196" fill="#ffffff"/>
+  <path d="M0 2h1200" stroke="#123d31" stroke-width="4"/>
+  <path d="M1 4v191h1198V4" fill="none" stroke="#c7d4cc"/>
+  <text x="39" y="49" fill="#123d31" font-family="Georgia, Times New Roman, serif" font-size="32">Project at a glance</text>
+  <g fill="none" stroke-linecap="round">
+    <use href="#design-route" stroke="#b0c5b9" stroke-width="3"/>
+    <use class="route-highlight" href="#design-route" stroke="#1b684e" stroke-width="4" stroke-dasharray="1"/>
+    <path d="M727 103H802C857 103 871 88 926 88H1047" stroke="#668074" stroke-width="3" stroke-dasharray="5 9"/>
+  </g>
+  <g fill="#ffffff" stroke="#1b684e" stroke-width="4">
+    <circle cx="142" cy="103" r="9"/>
+    <circle cx="431" cy="88" r="9"/>
+    <circle cx="727" cy="103" r="9"/>
+    <circle cx="1047" cy="88" r="9" stroke="#668074" stroke-width="3"/>
+  </g>
+  <g fill="#123d31" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" text-anchor="middle">
+    <text x="142" y="147">Architecture</text>
+    <text x="431" y="147">Azure layout</text>
+    <text x="727" y="147">Release design</text>
+    <text x="1047" y="147">Azure validation</text>
+  </g>
+  <g fill="#344b41" font-family="Arial, Helvetica, sans-serif" font-size="19" text-anchor="middle">
+    <text x="142" y="173">7 architecture views</text>
+    <text x="431" y="173">4 resource groups</text>
+    <text x="727" y="173">2 release paths</text>
+    <text x="1047" y="173">Planned</text>
+  </g>
+</svg>
