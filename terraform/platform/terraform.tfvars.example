@@ -1,0 +1,7 @@
+location           = "canadacentral"
+name_suffix        = "example"
+mysql_sku          = "GP_Standard_D2ds_v4"
+mysql_storage_gb   = 32
+backup_days        = 14
+storage_redundancy = "ZRS"
+log_daily_gb       = 1
