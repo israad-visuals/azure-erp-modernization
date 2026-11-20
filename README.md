@@ -91,7 +91,3 @@ Three alert rules were enabled for application errors, dead-letter messages, and
 ![Azure Monitor shows three rows backed up, zero after deletion, and all three restored with the original checksum](docs/assets/deployment/azure-monitor-mysql-recovery.png)
 
 Azure still reported **Accepted** for a separate managed MySQL point-in-time restore at the 75-minute check. The verified MySQL result above is from the logical restore.
-
-### Azure teardown
-
-I removed the deployment after validation. Azure confirmed that the four Terraform resource groups and the managed Container Apps group were gone. [Azure cleanup screenshot](docs/assets/deployment/azure-teardown.png)
