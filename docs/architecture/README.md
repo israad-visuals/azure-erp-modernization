@@ -20,11 +20,11 @@ Service Bus, Container Registry, and Key Vault use authenticated public endpoint
 ## Invoice and notification flow
 
 1. The ERP posts the invoice, updates stock and the accounting records, and saves an invoice event in the same MySQL transaction. The saved event is the outbox record.
-2. The scheduled relay publishes pending events to the Service Bus queue. It retries with the same event ID if publishing fails.
+2. The scheduled relay reads unpublished events from the outbox and sends them to the Service Bus queue. It retries with the same event ID if publishing fails.
 3. The .NET worker receives the event and stores a receipt in Azure Table Storage before acknowledging the message. It uses the event ID to avoid creating another receipt if the same message arrives again.
-4. The verifier can check receipts. Failed messages that reach their delivery limit go to a dead-letter queue for investigation and controlled replay.
+4. The verifier checks the receipts in Table Storage. Messages that reach their delivery limit go to a dead-letter queue for review and replay.
 
-The notification worker records a synthetic receipt. The ERP stays responsible for invoice posting and can continue to do so while the worker is paused, as long as the ERP and database are healthy. An outage in the shared Container Apps environment or the database remains a separate failure scenario.
+During the worker outage drill, the ERP and MySQL stayed online and the ERP posted an invoice. After the worker restarted, it processed the queued event and wrote one receipt. Invoice posting depends on the ERP and MySQL being available. [Outage drill](../../README.md#notification-outage-and-recovery)
 
 ## Releases and recovery
 

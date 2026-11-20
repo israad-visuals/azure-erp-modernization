@@ -12,7 +12,7 @@ Cedar Row Office Supply is a fictional wholesaler whose offices originally share
 
 [![View Azure deployment evidence and screenshots](docs/assets/azure-deployment-evidence-animated.svg)](#deployment-evidence)
 
-[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Deployment validation](#deployment-validation) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Deployment results](#deployment-results) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
 
 ## Business context
 
@@ -20,9 +20,9 @@ Cedar Row Office Supply is a fictional Toronto wholesaler with several sales off
 
 ## Business problem
 
-In this scenario, Cedar Row originally ran its ERP and database on one physical server at the warehouse. A hardware failure, power outage, or maintenance could cut off every office at once. Losing access to stock counts and invoices put shipments and payments at risk.
+Cedar Row originally ran its ERP and database on one physical server at the warehouse. A hardware failure, power outage, or maintenance could cut off every office at once. Losing access to stock counts and invoices put shipments and payments at risk.
 
-I moved the ERP and its database to Azure and deployed notifications as a separate workload. This took the offices off the shared warehouse server and let staff keep invoicing while the notification worker was paused. I configured database backups and blob versioning to give Cedar Row a way to recover its records and uploads.
+I moved the ERP and its database to Azure and deployed the notification worker separately. I configured database backups and versioning for uploaded files.
 
 ## My contribution
 
@@ -49,15 +49,15 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 | [Identity and ownership](docs/architecture/04-access.png) | The permissions each workload needs and the identities used for releases. |
 | [Terraform and releases](docs/architecture/05-delivery.png) | The infrastructure build order, separate releases, and rollback points. |
 | [Monitoring and alerts](docs/architecture/06-operations.png) | Container logs, invoice tracing, and operational alerts. |
-| [Recovery and cleanup](docs/architecture/07-recovery.png) | Isolated database restore, file recovery, and teardown. |
+| [Recovery and cleanup](docs/architecture/07-recovery.png) | MySQL restore steps, file recovery, and cleanup order. |
 
-## Deployment validation
+## Deployment results
 
-The deployment passed the ERP readiness checks during the notification outage and processed the queued invoice event once the worker restarted. The recovery drills restored a deleted blob and isolated MySQL records. [Deployment evidence](#deployment-evidence)
+The ERP stayed ready while the notification worker was stopped. When the worker restarted, it processed the queued invoice event. I restored a deleted file and matched the recovered MySQL rows to the original records. [Deployment evidence](#deployment-evidence)
 
 ## Live ERP showcase
 
-The Cedar Row ERP is live on Azure. The screenshots show the application in use, and the diagrams explain the services behind it. [Live ERP Deployed Access](https://erp.spiraml.com/)
+The Cedar Row ERP is live on Azure. [Live ERP Deployed Access](https://erp.spiraml.com/)
 
 [Full screenshot walkthrough](docs/live-erp-showcase.md) · [Azure deployment and recovery evidence](#deployment-evidence)
 
@@ -65,17 +65,17 @@ The Cedar Row ERP is live on Azure. The screenshots show the application in use,
 
 ![Cedar Row finance dashboard with customer and vendor payment totals and charts](docs/assets/live-erp/account-dashboard.jpg)
 
-**Sales and accounting.** The ledger shows how sales and payments affect accounts and stock. In the Azure deployment, posting an invoice saved the invoice, stock change, accounting entries, and a pending notification event in one MySQL transaction. A separate worker handled notifications through Service Bus, and invoice posting continued during the worker outage drill. [Invoice flow](docs/architecture/03-event.png) · [Outage drill](#notification-outage-and-recovery)
+**Sales and accounting.** The ledger shows how sales and payments affect accounts and stock. The ERP saves the invoice, stock change, accounting entries, and notification event in one MySQL transaction. A separate worker handles notifications through Service Bus. Invoice posting continued during the worker outage drill. [Invoice flow](docs/architecture/03-event.png) · [Outage drill](#notification-outage-and-recovery)
 
 ![Ledger showing customer payments, sales tax, and inventory entries](docs/assets/live-erp/ledger.jpg)
 
-**Inventory.** The item catalog shows the stock counts staff rely on when fulfilling orders. In Azure, those records lived in MySQL and uploads used private Blob Storage. I recovered a deleted file and checked a logical database restore against the original records. [Recovery drills](#data-recovery-drills)
+**Inventory.** The catalog shows what stock is on hand. MySQL stores the inventory records, and Azure Blob Storage holds uploads. I restored a deleted file and checked the recovered database records against the originals. [Recovery drills](#data-recovery-drills)
 
 ![Item catalog with office supply SKUs, purchase and sale prices, and stock on hand](docs/assets/live-erp/inventory.jpg)
 
 ## Deployment evidence
 
-I used Terraform to deploy four Azure resource groups for state, the shared platform, the ERP app, and notifications. The screenshots below document that deployment and its recovery drills.
+I used Terraform to deploy four Azure resource groups for state, the shared platform, the ERP app, and notifications.
 
 ![Azure resource groups for Cedar Row](docs/assets/deployment/azure-resource-groups.png)
 
@@ -91,13 +91,13 @@ Service Bus held one active message during the outage. After the worker restarte
 
 ![Service Bus metrics show one incoming and one outgoing message](docs/assets/deployment/service-bus-message-flow.png)
 
-Log Analytics ties the invoice, the relay’s publish, and the worker’s receipt to the same event ID.
+Log Analytics shows the same event ID for invoice posting, the relay publishing it to Service Bus, and the worker recording the receipt.
 
 ![A shared event ID links invoice posting, Service Bus publication, and receipt recording](docs/assets/deployment/azure-monitor-invoice-to-receipt.png)
 
 ### Azure Monitor alerts
 
-Three alert rules were enabled for application errors, dead-letter messages, and MySQL CPU.
+I enabled three alert rules for application errors, dead-letter messages, and MySQL CPU.
 
 ![Three enabled Azure Monitor alert rules for Cedar Row](docs/assets/deployment/azure-monitor-alert-rules.png)
 
