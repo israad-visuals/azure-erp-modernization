@@ -1,4 +1,4 @@
-# Architecture design notes
+# Azure deployment architecture
 
 [Project overview](../../README.md) · [Editable draw.io file](Azure-ERP-Architecture.drawio) · [Seven-page PDF](Azure-ERP-Architecture.pdf)
 
@@ -13,7 +13,7 @@
 
 ## Network and identity
 
-The design uses one Azure region and a virtual network with separate subnets for Container Apps, MySQL, and private endpoints. Only the ERP web app exposes HTTPS ingress, limited to approved source IPs. MySQL uses private network access. The Blob and Table storage accounts use separate private endpoints and private DNS.
+I deployed the ERP in one Azure region with separate virtual network subnets for Container Apps, MySQL, and private endpoints. Only the ERP web app exposes HTTPS ingress, limited to approved source IPs in the Terraform configuration. MySQL uses private network access. The Blob and Table storage accounts use separate private endpoints and private DNS.
 
 Service Bus, Container Registry, and Key Vault use authenticated public endpoints over TLS. The relay can send to Service Bus and update outbox rows. The worker can receive from the queue and write notification receipts. The ERP app and migration job have separate database credentials. Deployment and image pull access are separate from workload access.
 
@@ -26,10 +26,10 @@ Service Bus, Container Registry, and Key Vault use authenticated public endpoint
 
 The notification worker records a synthetic receipt. The ERP stays responsible for invoice posting and can continue to do so while the worker is paused, as long as the ERP and database are healthy. An outage in the shared Container Apps environment or the database remains a separate failure scenario.
 
-## Release and recovery design
+## Releases and recovery
 
-Bootstrap the Terraform backend first, apply the shared platform, publish the images, and deploy the apps and jobs. The plan gives the ERP and worker separate image versions and rollback decisions. Use Azure Monitor and Log Analytics to follow an invoice across posting, publishing, and receipt processing.
+I bootstrapped the Terraform backend, applied the shared platform, published both images to Azure Container Registry, and deployed the applications and jobs. The ERP and worker use separate image versions and can be released independently. Log Analytics traced an invoice from posting through publishing and receipt processing. [Monitoring and outage evidence](../../README.md#notification-outage-and-recovery)
 
-For a database recovery exercise, restore to a separate MySQL server and verify the invoice and stock records before considering a cutover. Verify restored uploads separately. Remove the temporary workload infrastructure before retiring the Terraform state backend.
+The recovery drills restored a deleted upload from an earlier blob version and isolated MySQL records from a logical backup. The recovery diagram also documents the separate-server point-in-time restore and cutover procedure. [Recovery evidence](../../README.md#data-recovery-drills) · [Recovery diagram](07-recovery.png)
 
 [Microsoft Azure architecture icons](https://learn.microsoft.com/en-us/azure/architecture/icons/)

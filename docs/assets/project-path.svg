@@ -30,7 +30,7 @@
   <g fill="#123d31" font-family="Arial, Helvetica, sans-serif" font-size="23" font-weight="700" text-anchor="middle">
     <text x="142" y="147">Architecture</text>
     <text x="431" y="147">Azure layout</text>
-    <text x="727" y="147">Release design</text>
+    <text x="727" y="147">App releases</text>
     <text x="1047" y="147">Azure deployment</text>
   </g>
   <g fill="#344b41" font-family="Arial, Helvetica, sans-serif" font-size="19" text-anchor="middle">

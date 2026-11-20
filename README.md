@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I deployed the ERP and its separate notification worker with Terraform on Azure Container Apps, using managed MySQL and Service Bus. The deployment drills verified that invoicing continued during a worker outage and that a deleted file and synthetic MySQL records could be recovered.
+Cedar Row Office Supply is a fictional wholesaler whose offices originally shared one on-premises ERP server. An outage could stop invoicing and leave staff without current stock counts. I moved the ERP to Azure with Terraform. The live ERP and its separate notification worker run on Azure Container Apps with managed MySQL and Service Bus. Invoicing continued during the worker outage drill. The recovery drills restored a deleted file and isolated MySQL records.
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
@@ -12,7 +12,7 @@ Cedar Row Office Supply is a fictional wholesaler whose offices share one on-pre
 
 [![Deployment evidence. Azure deployment and notification outage drill.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
 
-[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Deployment validation](#deployment-validation) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
 
 ## Business context
 
@@ -20,14 +20,14 @@ Cedar Row Office Supply is a fictional Toronto wholesaler with several sales off
 
 ## Business problem
 
-In this scenario, Cedar Row runs its ERP and database on one physical server at the warehouse. A hardware failure, a power outage at the warehouse, or maintenance on that server can cut off every office at once. Sales staff lose access to live stock counts, the warehouse can miss shipments, and delayed invoices can slow down payments.
+In this scenario, Cedar Row originally ran its ERP and database on one physical server at the warehouse. A hardware failure, power outage, or maintenance could cut off every office at once. Losing access to stock counts and invoices put shipments and payments at risk.
 
-Cedar Row needs the ERP to stay available during business hours and a way to recover its records after a serious outage. I designed the move to Azure to take the ERP off the warehouse hardware, keep invoicing running if the notification worker fails, and use managed database backups. The disaster recovery plan restores the database to a separate server and checks invoices, stock, and accounting records before staff resume work.
+I moved the ERP and its database to Azure and deployed notifications as a separate workload. This took the offices off the shared warehouse server and let staff keep invoicing while the notification worker was paused. I configured database backups and blob versioning to give Cedar Row a way to recover its records and uploads.
 
 ## My contribution
 
-- **Azure deployment.** I pushed both images to Azure Container Registry and deployed the ERP and notification worker to Azure Container Apps with Terraform. I designed separate release and rollback paths for the two workloads.
-- **Architecture and security.** I designed the invoice-to-notification flow with Azure Service Bus. I configured private access to MySQL and storage, with managed identities and scoped Key Vault permissions.
+- **Azure deployment.** I pushed both images to Azure Container Registry and deployed the ERP and notification worker independently to Azure Container Apps with Terraform.
+- **Architecture and security.** I implemented the invoice-to-notification flow with Azure Service Bus. I configured private access to MySQL and storage, with managed identities and scoped Key Vault permissions.
 - **Monitoring and resilience.** I configured Azure Monitor, Log Analytics, and three alert rules. During the worker outage drill, the ERP posted a $30 invoice and passed all eight readiness checks. After the worker restarted, the queued event produced one verified receipt.
 - **Data recovery.** I configured Blob versioning and MySQL backup retention. The drills restored a deleted blob from its previous version and three MySQL rows from a logical backup. Both restores matched the original SHA-256 checksums.
 
@@ -37,7 +37,7 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 [![High-level Azure landing zone for Cedar Row Office Supply](docs/architecture/01-overview.png)](docs/architecture/01-overview.png)
 
-[Editable draw.io file](docs/architecture/Azure-ERP-Architecture.drawio) · [Seven-page PDF](docs/architecture/Azure-ERP-Architecture.pdf) · [Design notes](docs/architecture/README.md) · [Terraform](terraform/README.md)
+[Editable draw.io file](docs/architecture/Azure-ERP-Architecture.drawio) · [Seven-page PDF](docs/architecture/Azure-ERP-Architecture.pdf) · [Architecture notes](docs/architecture/README.md) · [Terraform](terraform/README.md)
 
 ## Architecture diagrams
 
@@ -51,17 +51,17 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 | [Monitoring and alerts](docs/architecture/06-operations.png) | Container logs, invoice tracing, and operational alerts. |
 | [Recovery and cleanup](docs/architecture/07-recovery.png) | Isolated database restore, file recovery, and teardown. |
 
-## Validation plan
+## Deployment validation
 
-The [deployment evidence](#deployment-evidence) shows the notification outage and data recovery drills. The [recovery design](docs/architecture/07-recovery.png) also covers restoring MySQL to a separate server before cutover.
+The deployment passed the ERP readiness checks during the notification outage and processed the queued invoice event once the worker restarted. The recovery drills restored a deleted blob and isolated MySQL records. [Deployment evidence](#deployment-evidence)
 
 ## Live ERP showcase
 
-These screens show the live Cedar Row ERP on a VPS. The linked diagrams and deployment records show how I ran and validated the ERP on Azure. [Live ERP Deployed Access](https://erp.spiraml.com/)
+The Cedar Row ERP is live on Azure. The screenshots show the application in use, and the diagrams explain the services behind it. [Live ERP Deployed Access](https://erp.spiraml.com/)
 
 [Full screenshot walkthrough](docs/live-erp-showcase.md) · [Azure deployment and recovery evidence](#deployment-evidence)
 
-**Staff dashboard.** Finance staff see customer and vendor payments in one place. In Azure, the browser reached the ERP on Azure Container Apps over HTTPS, and the app read business records from MySQL over a private network. [Network diagram](docs/architecture/02-network.png)
+**Staff dashboard.** Finance staff see customer and vendor payments in one place. The browser reaches the ERP on Azure Container Apps over HTTPS, and the app reads business records from MySQL over a private network. [Network diagram](docs/architecture/02-network.png)
 
 ![Cedar Row finance dashboard with customer and vendor payment totals and charts](docs/assets/live-erp/account-dashboard.jpg)
 
@@ -110,5 +110,3 @@ Three alert rules were enabled for application errors, dead-letter messages, and
 **Azure MySQL.** Three synthetic records were backed up, deleted from an isolated database, and restored into a second database on the same Azure server. The source remained empty and all three restored rows matched the original checksum. [Backup retention settings](docs/assets/deployment/mysql-backup-retention.png)
 
 ![Azure Monitor shows three rows backed up, zero after deletion, and all three restored with the original checksum](docs/assets/deployment/azure-monitor-mysql-recovery.png)
-
-Azure still reported **Accepted** for a separate managed MySQL point-in-time restore at the 75-minute check. The verified MySQL result above is from the logical restore.

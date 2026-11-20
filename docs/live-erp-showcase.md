@@ -2,13 +2,13 @@
 
 [![Live ERP Deployed Access](assets/live-erp-access.svg)](https://erp.spiraml.com/)
 
-These screenshots show the live Cedar Row ERP on a VPS, where staff, customers, and vendors sign in with assigned accounts. Each section connects what they see to the Azure deployment I built and verified. [Azure landing zone](architecture/01-overview.png) · [Azure deployment evidence](../README.md#deployment-evidence)
+The Cedar Row ERP is live on Azure. Staff, customers, and vendors sign in with assigned accounts. The walkthrough connects their screens to the infrastructure I deployed. [Azure landing zone](architecture/01-overview.png) · [Azure deployment evidence](../README.md#deployment-evidence)
 
 [Sales and payments](#sales-and-payments) · [Purchasing and inventory](#purchasing-and-inventory) · [Customer and vendor accounts](#customer-and-vendor-accounts) · [Projects, people, and support](#projects-people-and-support)
 
 ## Sales and payments
 
-**Account dashboard.** Staff review customer payments, vendor payments, and expenses. In Azure, the browser connected to the ERP on Container Apps over HTTPS, and the app read the underlying records from MySQL over a private network. [Network diagram](architecture/02-network.png) · [Staff entry page](assets/live-erp/staff-workspace.jpg)
+**Account dashboard.** Staff review customer payments, vendor payments, and expenses. The browser connects to the ERP on Azure Container Apps over HTTPS, and the app reads the underlying records from MySQL over a private network. [Network diagram](architecture/02-network.png) · [Staff entry page](assets/live-erp/staff-workspace.jpg)
 
 ![Staff finance dashboard with payment totals and monthly trends](assets/live-erp/account-dashboard.jpg)
 
@@ -28,7 +28,7 @@ These screenshots show the live Cedar Row ERP on a VPS, where staff, customers, 
 
 ## Purchasing and inventory
 
-**Purchase invoices and inventory.** Purchase invoices record what the warehouse bought. The item catalog shows stock on hand for those products. Both types of records lived in private MySQL in the Azure deployment. [Network diagram](architecture/02-network.png)
+**Purchase invoices and inventory.** Purchase invoices record what the warehouse bought. The item catalog shows stock on hand for those products. Both types of records are stored in MySQL on the Azure virtual network. [Network diagram](architecture/02-network.png)
 
 ![Purchase invoice register with vendor balances and statuses](assets/live-erp/purchase-invoices.jpg)
 

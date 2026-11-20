@@ -1,6 +1,6 @@
 # Terraform
 
-The four roots match the [landing zone](../docs/architecture/01-overview.png).
+I used these four roots to deploy the [Azure landing zone](../docs/architecture/01-overview.png). The deployment and recovery results are in the [project evidence](../README.md#deployment-evidence).
 
 | Root | Resource group | What it creates |
 | --- | --- | --- |
@@ -52,6 +52,8 @@ The ERP image must include the invoice transaction, outbox and relay commands. T
 
 ## Deployment evidence
 
-Capture the saved plan totals, successful applies, resource groups and workload revisions. Use synthetic invoices to check stock and accounting while the worker is stopped, then check receipts after it resumes. Verify the restored records on a separate MySQL server from inside the VNet and record the restore time. Recover a test upload from Blob Storage and check that a controlled dead-letter replay produces only one receipt. [MySQL restore](https://learn.microsoft.com/en-us/azure/mysql/flexible-server/concepts-backup-restore)
+The evidence includes the four resource groups, ERP readiness checks, Service Bus metrics, and the invoice event traced to the worker receipt. The recovery drills restored a deleted blob from its previous version and verified a logical MySQL restore against the original records. [Deployment evidence](../README.md#deployment-evidence) · [Recovery drills](../README.md#data-recovery-drills)
+
+## Cleanup order
 
 Destroy in reverse order. Remove the notification and ERP workloads before the shared platform. Review any temporary restore resources and remove the state storage last.
