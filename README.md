@@ -2,13 +2,13 @@
 
 ## Executive summary
 
-Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I designed a move to Azure using Container Apps, managed MySQL, and Service Bus to keep invoicing available during a notification outage and recover records from backup after a database failure. Implementation and Azure validation are planned.
+Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I deployed the ERP and its separate notification worker with Terraform on Azure Container Apps, using managed MySQL and Service Bus. In a controlled worker outage, the ERP posted a demo invoice and the notification was processed after the worker restarted.
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
-![Project at a glance. Architecture with seven views, Azure layout with four resource groups, release design with two paths, and planned Azure validation.](docs/assets/project-path.svg)
+![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and a verified notification outage drill.](docs/assets/project-path.svg)
 
-[![Deployment evidence. Azure deployment is planned.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
+[![Deployment evidence. Azure deployment and notification outage drill.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
 
 [Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Deployment evidence](#deployment-evidence)
 
@@ -40,7 +40,7 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 | View | What it shows |
 | --- | --- |
-| [Landing zone](docs/architecture/01-overview.png) | The subscription, four resource groups, and invoice notification path. |
+| [Landing zone](docs/architecture/01-overview.png) | Four resource groups and the invoice notification path. |
 | [Network and ingress](docs/architecture/02-network.png) | HTTPS entry, delegated subnets, and private data paths. |
 | [Invoice notifications](docs/architecture/03-event.png) | The invoice transaction, queue, receipt, and failure handling. |
 | [Identity and ownership](docs/architecture/04-access.png) | The permissions each workload needs and the identities used for releases. |
@@ -50,11 +50,36 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 ## Validation plan
 
-1. Post an invoice for two cartons at $15 each. Verify a $30 invoice, eight cartons remaining from ten, and the corresponding accounting entries.
-2. Pause the notification worker in Azure. Post another invoice and verify it succeeds. Restart the worker and trace the event to its receipt.
-3. Deliver the same event twice and verify that it produces one receipt.
-4. Roll back the ERP and worker independently. Restore MySQL to a separate server and verify the restored records before teardown.
+The [deployment evidence](#deployment-evidence) shows the completed notification outage drill. The validation plan also covers duplicate delivery, independent ERP and worker rollbacks, and point-in-time recovery of MySQL.
 
 ## Deployment evidence
 
-Azure deployment is planned. This section will hold the Terraform apply output, Azure resource screenshots, and results from the invoice and recovery checks after the deployment is verified.
+I used Terraform to deploy four resource groups for state, the shared platform, the ERP app, and notifications.
+
+![Azure resource groups for Cedar Row](docs/assets/deployment/azure-resource-groups.png)
+
+The receipt storage account has an [approved private endpoint](docs/assets/deployment/private-storage-connection.png).
+
+### Notification outage and recovery
+
+While the notification worker was stopped, the ERP posted a **$30 demo invoice** and stock dropped from ten cartons to eight. Azure Monitor recorded **eight HTTP 200 readiness responses** from the ERP during the outage.
+
+![Azure Monitor shows eight successful ERP readiness responses during the outage](docs/assets/deployment/azure-monitor-erp-readiness.png)
+
+Service Bus held one active message during the outage. After the worker restarted, the queue drained and the verifier found one matching receipt.
+
+![Service Bus metrics show one incoming and one outgoing message](docs/assets/deployment/service-bus-message-flow.png)
+
+Log Analytics ties the invoice, the relay’s publish, and the worker’s receipt to the same event ID.
+
+![A shared event ID links invoice posting, Service Bus publication, and receipt recording](docs/assets/deployment/azure-monitor-invoice-to-receipt.png)
+
+### Azure Monitor alerts
+
+Three alert rules were enabled for application errors, dead-letter messages, and MySQL CPU.
+
+![Three enabled Azure Monitor alert rules for Cedar Row](docs/assets/deployment/azure-monitor-alert-rules.png)
+
+### MySQL recovery
+
+I configured MySQL with [seven days of backup retention](docs/assets/deployment/mysql-backup-retention.png). The [recovery procedure](docs/architecture/07-recovery.png) uses a separate server to check restored invoices, stock, and accounting records before a cutover.
