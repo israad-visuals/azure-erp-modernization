@@ -1,9 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="108" viewBox="0 0 1200 108" role="img" aria-labelledby="title description">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="124" viewBox="0 0 1200 124" role="img" aria-labelledby="title description">
   <title id="title">Deployment evidence</title>
   <desc id="description">Open the Azure deployment and notification outage evidence.</desc>
-  <rect width="1200" height="108" fill="#123d31"/>
-  <text x="39" y="66" fill="#ffffff" font-family="Georgia, Times New Roman, serif" font-size="39">Deployment evidence</text>
-  <path d="M827 32v44" stroke="#688d75"/>
-  <text x="1108" y="61" text-anchor="end" fill="#ffffff" font-family="Arial, Helvetica, sans-serif" font-size="21">View Azure screenshots</text>
-  <path d="M1139 54h22m-8-8 8 8-8 8" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"/>
+  <rect width="1200" height="124" fill="#123d31"/>
+  <text x="39" y="77" fill="#ffffff" font-family="Georgia, Times New Roman, serif" font-size="43">Deployment evidence</text>
+  <rect x="843" y="36" width="320" height="52" rx="8" fill="#c6f5d8"/>
+  <text x="866" y="70" fill="#123d31" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="bold">View Azure screenshots</text>
+  <path d="M1118 62h22m-8-8 8 8-8 8" fill="none" stroke="#123d31" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
 </svg>
