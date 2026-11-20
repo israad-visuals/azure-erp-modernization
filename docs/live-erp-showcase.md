@@ -54,7 +54,7 @@ Projects, people, and support run inside the ERP web app. In Azure, I used Log A
 
 ![Project board showing three projects and task completion progress](assets/live-erp/projects.jpg)
 
-**People dashboard.** Staff review staffing and leave requests across branches.
+**HRM dashboard.** Staff review staffing and leave requests across branches.
 
 ![People dashboard with departments, branch counts, calendar, and leave requests](assets/live-erp/people-dashboard.jpg)
 

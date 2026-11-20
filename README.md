@@ -18,6 +18,8 @@ Cedar Row Office Supply is a fictional wholesaler whose offices originally share
 
 Cedar Row Office Supply is a fictional Toronto wholesaler with several sales offices and a shared warehouse. It sells paper, toner, and other office supplies to local businesses. Staff across the company rely on one ERP to check what is in stock, post invoices, and keep sales and accounting records in sync.
 
+The ERP includes customer relationship management (CRM) for sales activity and human resource management (HRM) for staffing, attendance, and leave.
+
 ## Business problem
 
 Cedar Row originally ran its ERP and database on one physical server at the warehouse. A hardware failure, power outage, or maintenance could cut off every office at once. Losing access to stock counts and invoices put shipments and payments at risk.
