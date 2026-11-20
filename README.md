@@ -10,7 +10,7 @@ Cedar Row Office Supply is a fictional wholesaler whose offices originally share
 
 ![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and verified outage and data recovery drills.](docs/assets/project-path.svg)
 
-[![View Azure deployment evidence and screenshots](docs/assets/azure-deployment-evidence.svg)](#deployment-evidence)
+[![View Azure deployment evidence and screenshots](docs/assets/azure-deployment-evidence-animated.svg)](#deployment-evidence)
 
 [Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Deployment validation](#deployment-validation) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
 

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="212" viewBox="0 0 1200 212" role="img" aria-labelledby="title description">
+  <title id="title">Azure deployment evidence</title>
+  <desc id="description">View the Azure deployment screenshots.</desc>
+  <style>
+    .evidence-button { transform-origin: 600px 106px; }
+    @media (prefers-reduced-motion: no-preference) {
+      .evidence-button { animation: evidence-pop 1.65s ease-in-out 2; }
+    }
+    @keyframes evidence-pop {
+      0%, 100% { transform: scale(1); }
+      42% { transform: scale(1.045); }
+    }
+  </style>
+  <defs>
+    <linearGradient id="cedar" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#08794b"/>
+      <stop offset="1" stop-color="#085638"/>
+    </linearGradient>
+  </defs>
+  <g class="evidence-button" fill="#ffffff">
+    <rect x="114" y="27" width="972" height="169" rx="24" fill="#0b3626"/>
+    <rect x="114" y="15" width="972" height="169" rx="24" fill="url(#cedar)" stroke="#54bd84" stroke-width="3"/>
+    <text x="600" y="89" text-anchor="middle" font-family="Georgia, Times New Roman, serif" font-size="56">Azure deployment evidence</text>
+    <text x="586" y="142" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-size="30" font-weight="bold">Click here to view</text>
+    <path d="M722 132h24m-9-9 9 9-9 9" fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+  </g>
+</svg>
