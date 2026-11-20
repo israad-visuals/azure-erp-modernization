@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="196" viewBox="0 0 1200 196" role="img" aria-labelledby="title description">
   <title id="title">Project at a glance</title>
-  <desc id="description">Seven architecture views, four Azure resource groups, two release paths, and a verified notification outage drill.</desc>
+  <desc id="description">Seven architecture views, four Azure resource groups, two release paths, and verified outage and data recovery drills.</desc>
   <style>
     @media (prefers-reduced-motion: no-preference) {
       .route-highlight { animation: trace 3.2s ease-in-out both; }
@@ -37,6 +37,6 @@
     <text x="142" y="173">7 architecture views</text>
     <text x="431" y="173">4 resource groups</text>
     <text x="727" y="173">2 release paths</text>
-    <text x="1047" y="173">Outage drill verified</text>
+    <text x="1047" y="173">Recovery drills verified</text>
   </g>
 </svg>

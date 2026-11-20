@@ -2,15 +2,15 @@
 
 ## Executive summary
 
-Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I deployed the ERP and its separate notification worker with Terraform on Azure Container Apps, using managed MySQL and Service Bus. In a controlled worker outage, the ERP posted a demo invoice and the notification was processed after the worker restarted.
+Cedar Row Office Supply is a fictional wholesaler whose offices share one on-premises ERP server. If that server goes down, invoicing stops and shipments can be delayed. I deployed the ERP and its separate notification worker with Terraform on Azure Container Apps, using managed MySQL and Service Bus. The deployment drills verified that invoicing continued during a worker outage and that a deleted file and synthetic MySQL records could be recovered.
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
-![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and a verified notification outage drill.](docs/assets/project-path.svg)
+![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and verified outage and data recovery drills.](docs/assets/project-path.svg)
 
 [![Deployment evidence. Azure deployment and notification outage drill.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
 
-[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Deployment evidence](#deployment-evidence)
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
 
 ## Business context
 
@@ -50,7 +50,7 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 ## Validation plan
 
-The [deployment evidence](#deployment-evidence) shows the completed notification outage drill. The validation plan also covers duplicate delivery, independent ERP and worker rollbacks, and point-in-time recovery of MySQL.
+The [deployment evidence](#deployment-evidence) shows the notification outage and data recovery drills. The [recovery design](docs/architecture/07-recovery.png) also covers restoring MySQL to a separate server before cutover.
 
 ## Deployment evidence
 
@@ -80,6 +80,14 @@ Three alert rules were enabled for application errors, dead-letter messages, and
 
 ![Three enabled Azure Monitor alert rules for Cedar Row](docs/assets/deployment/azure-monitor-alert-rules.png)
 
-### MySQL recovery
+### Data recovery drills
 
-I configured MySQL with [seven days of backup retention](docs/assets/deployment/mysql-backup-retention.png). The [recovery procedure](docs/architecture/07-recovery.png) uses a separate server to check restored invoices, stock, and accounting records before a cutover.
+**Azure Blob Storage.** Deleting a synthetic file returned HTTP 404 on read. After its previous version became current, the file returned HTTP 200 and matched the original SHA-256 checksum. [Versioning and retention settings](docs/assets/deployment/blob-data-protection.png)
+
+![Azure Monitor shows the file returned HTTP 200, then 404 after deletion, then 200 with the original checksum after restore](docs/assets/deployment/azure-monitor-blob-recovery.png)
+
+**Azure MySQL.** Three synthetic records were backed up, deleted from an isolated database, and restored into a second database on the same Azure server. The source remained empty and all three restored rows matched the original checksum. [Backup retention settings](docs/assets/deployment/mysql-backup-retention.png)
+
+![Azure Monitor shows three rows backed up, zero after deletion, and all three restored with the original checksum](docs/assets/deployment/azure-monitor-mysql-recovery.png)
+
+Azure still reported **Accepted** for a separate managed MySQL point-in-time restore at the 75-minute check. The verified MySQL result above is from the logical restore.
