@@ -6,11 +6,13 @@ Cedar Row Office Supply is a fictional wholesaler whose offices share one on-pre
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
+[![Live ERP Deployed Access](docs/assets/live-erp-access.svg)](https://erp.spiraml.com/)
+
 ![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and verified outage and data recovery drills.](docs/assets/project-path.svg)
 
 [![Deployment evidence. Azure deployment and notification outage drill.](docs/assets/deployment-evidence.svg)](#deployment-evidence)
 
-[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
+[Business context](#business-context) · [Business problem](#business-problem) · [My contribution](#my-contribution) · [Landing zone](#landing-zone) · [Architecture diagrams](#architecture-diagrams) · [Validation plan](#validation-plan) · [Live ERP showcase](#live-erp-showcase) · [Deployment evidence](#deployment-evidence) · [Data recovery drills](#data-recovery-drills)
 
 ## Business context
 
@@ -53,9 +55,27 @@ The ERP web app has restricted HTTPS access. The worker runs in the same Contain
 
 The [deployment evidence](#deployment-evidence) shows the notification outage and data recovery drills. The [recovery design](docs/architecture/07-recovery.png) also covers restoring MySQL to a separate server before cutover.
 
+## Live ERP showcase
+
+The live Cedar Row ERP runs on a VPS with fictional wholesale records. Use your assigned account to sign in. [Live ERP Deployed Access](https://erp.spiraml.com/)
+
+[Full screenshot walkthrough](docs/live-erp-showcase.md) · [Staff, customer and vendor views](docs/live-erp-showcase.md#customer-and-vendor-accounts)
+
+**Staff dashboard.** Customer and vendor payment totals, monthly trends, and recent expenses.
+
+![Cedar Row finance dashboard with customer and vendor payment totals and charts](docs/assets/live-erp/account-dashboard.jpg)
+
+**Sale to payment.** Invoice `SI-2026-11-008` shows $623.76 paid and $0.00 due. The same payment appears in the customer’s account and as matching debit and credit entries in the ledger. [Paid invoice](docs/assets/live-erp/paid-sales-invoice.jpg) · [Customer view](docs/assets/live-erp/customer-invoices.jpg)
+
+![Ledger with the $623.76 customer payment, sales tax, and inventory entries](docs/assets/live-erp/ledger.jpg)
+
+**Inventory.** Staff can check SKUs, stock quantities, and purchase and sale prices. [Purchase register](docs/assets/live-erp/purchase-invoices.jpg) · [Vendor view](docs/assets/live-erp/vendor-invoices.jpg)
+
+![Item catalog with office supply SKUs, purchase and sale prices, and stock on hand](docs/assets/live-erp/inventory.jpg)
+
 ## Deployment evidence
 
-I used Terraform to deploy four resource groups for state, the shared platform, the ERP app, and notifications.
+I used Terraform to deploy four Azure resource groups for state, the shared platform, the ERP app, and notifications. The screenshots below document that deployment and its recovery drills.
 
 ![Azure resource groups for Cedar Row](docs/assets/deployment/azure-resource-groups.png)
 
@@ -63,7 +83,7 @@ The receipt storage account has an [approved private endpoint](docs/assets/deplo
 
 ### Notification outage and recovery
 
-While the notification worker was stopped, the ERP posted a **$30 demo invoice** and stock dropped from ten cartons to eight. Azure Monitor recorded **eight HTTP 200 readiness responses** from the ERP during the outage.
+While the notification worker was stopped, the ERP posted a **$30 synthetic invoice** and stock dropped from ten cartons to eight. Azure Monitor recorded **eight HTTP 200 readiness responses** from the ERP during the outage.
 
 ![Azure Monitor shows eight successful ERP readiness responses during the outage](docs/assets/deployment/azure-monitor-erp-readiness.png)
 

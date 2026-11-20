@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="530" height="86" viewBox="0 0 530 86" role="img" aria-labelledby="title">
+  <title id="title">Live ERP Deployed Access</title>
+  <defs>
+    <linearGradient id="cedar" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#123d31"/>
+      <stop offset="1" stop-color="#1b684e"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="529" height="85" rx="12" fill="url(#cedar)" stroke="#2e765d"/>
+  <rect x="18" y="18" width="50" height="50" rx="9" fill="#ffffff" fill-opacity="0.13"/>
+  <g fill="none" stroke="#e6f4ed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="30" y="34" width="26" height="18" rx="2"/>
+    <path d="M30 39h26m-21-2.5h1m3 0h1"/>
+  </g>
+  <text x="87" y="53" fill="#ffffff" font-family="Georgia, Times New Roman, serif" font-size="31">Live ERP Deployed Access</text>
+  <path d="M470 26v34" stroke="#8ab4a1" stroke-opacity="0.65"/>
+  <path d="M485 43h22m-8-8 8 8-8 8" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

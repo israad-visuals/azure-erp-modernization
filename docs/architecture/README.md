@@ -24,7 +24,7 @@ Service Bus, Container Registry, and Key Vault use authenticated public endpoint
 3. The .NET worker receives the event and stores a receipt in Azure Table Storage before acknowledging the message. It uses the event ID to avoid creating another receipt if the same message arrives again.
 4. The verifier can check receipts. Failed messages that reach their delivery limit go to a dead-letter queue for investigation and controlled replay.
 
-The demo records a synthetic receipt as the notification outcome. The ERP stays responsible for invoice posting and can continue to do so while the worker is paused, as long as the ERP and database are healthy. An outage in the shared Container Apps environment or the database remains a separate failure scenario.
+The notification worker records a synthetic receipt. The ERP stays responsible for invoice posting and can continue to do so while the worker is paused, as long as the ERP and database are healthy. An outage in the shared Container Apps environment or the database remains a separate failure scenario.
 
 ## Release and recovery design
 
