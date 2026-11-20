@@ -24,9 +24,10 @@ Cedar Row needs the ERP to stay available during business hours and a way to rec
 
 ## My contribution
 
-- **Application design.** I mapped the invoice flow from posting through stock and accounting updates to a separate notification worker.
-- **Azure architecture.** I grouped the Terraform state, shared platform, ERP app, and notification service. I designed private access to MySQL and storage, scoped identities, and monitoring for each step of the invoice flow.
-- **Delivery and recovery.** I planned separate releases and rollbacks for the ERP and worker, an isolated database restore, and the checks needed to verify them.
+- **Azure deployment.** I pushed both images to Azure Container Registry and deployed the ERP and notification worker to Azure Container Apps with Terraform. I designed separate release and rollback paths for the two workloads.
+- **Architecture and security.** I designed the invoice-to-notification flow with Azure Service Bus. I configured private access to MySQL and storage, with managed identities and scoped Key Vault permissions.
+- **Monitoring and resilience.** I configured Azure Monitor, Log Analytics, and three alert rules. During the worker outage drill, the ERP posted a $30 invoice and passed all eight readiness checks. After the worker restarted, the queued event produced one verified receipt.
+- **Data recovery.** I configured Blob versioning and MySQL backup retention. The drills restored a deleted blob from its previous version and three MySQL rows from a logical backup. Both restores matched the original SHA-256 checksums.
 
 ## Landing zone
 
