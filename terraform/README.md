@@ -52,7 +52,7 @@ The ERP image must include the invoice transaction, outbox and relay commands. T
 
 ## Deployment evidence
 
-The evidence includes the four resource groups, ERP readiness checks, Service Bus metrics, and the invoice event traced to the worker receipt. The recovery drills restored a deleted blob from its previous version and verified a logical MySQL restore against the original records. [Deployment evidence](../README.md#deployment-evidence) · [Recovery drills](../README.md#data-recovery-drills)
+The evidence includes Terraform apply results, the four resource groups, ERP readiness checks, and the invoice event traced to the worker receipt. The recovery drills restored a deleted blob from its previous version and verified a logical MySQL restore against the original records. [Terraform screenshots](../README.md#terraform-apply-results) · [Recovery drills](../README.md#data-recovery-drills)
 
 ## Cleanup order
 

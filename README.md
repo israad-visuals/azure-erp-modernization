@@ -85,6 +85,26 @@ The Cedar Row ERP is live on Azure. [Live ERP Deployed Access](https://erp.spira
 
 I used Terraform to deploy four Azure resource groups for state, the shared platform, the ERP app, and notifications.
 
+### Terraform apply results
+
+**Shared platform.** Terraform added 47 resources for networking, data, messaging, and monitoring.
+
+[![Terraform shared platform apply completed with 47 resources added](docs/assets/deployment/terraform-platform-apply.png)](docs/assets/deployment/terraform-platform-apply.png)
+
+**Database migration.** Azure reported that the migration job succeeded before the ERP web deployment.
+
+[![Azure CLI showing the ERP migration job succeeded](docs/assets/deployment/erp-migration-result.png)](docs/assets/deployment/erp-migration-result.png)
+
+**Notification worker.** Terraform added the worker and the receipt verifier job.
+
+[![Terraform notification apply completed with the worker and receipt verifier added](docs/assets/deployment/terraform-notification-apply.png)](docs/assets/deployment/terraform-notification-apply.png)
+
+**ERP web app.** Terraform added the web app and the scheduled job that relays invoice events.
+
+[![Terraform ERP apply completed with the web app and scheduled relay added](docs/assets/deployment/terraform-erp-apply.png)](docs/assets/deployment/terraform-erp-apply.png)
+
+### Azure resources
+
 ![Azure resource groups for Cedar Row](docs/assets/deployment/azure-resource-groups.png)
 
 The receipt storage account has an [approved private endpoint](docs/assets/deployment/private-storage-connection.png).
