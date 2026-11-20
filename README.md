@@ -2,7 +2,9 @@
 
 ## Executive summary
 
-I designed and deployed an Azure migration for Cedar Row Office Supply, a fictional wholesaler whose offices shared one on-premises ERP server. An outage could stop invoicing and leave staff without current stock counts. I used Terraform to deploy the ERP and its separate notification worker on Azure Container Apps with managed MySQL and Service Bus. I tested that invoicing continued during a worker outage and recovered a deleted file and isolated MySQL records.
+I designed this project for Cedar Row Office Supply, a fictional wholesaler with several branches and a shared warehouse. Employees depend on one ERP for sales, stock, accounting, customer relationship management (CRM), and human resource management (HRM). A failure on the original warehouse server could interrupt work across every branch, so Cedar Row needed a way to keep key operations running and recover its records.
+
+I deployed the ERP and a separate notification worker on Azure with Terraform, using Container Apps, managed MySQL, and Service Bus. I tested that invoicing continued while the worker was down. I also restored a deleted file and isolated MySQL records.
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
