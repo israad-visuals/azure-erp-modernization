@@ -2,7 +2,7 @@
 
 [![Live ERP Deployed Access](assets/live-erp-access.svg)](https://erp.spiraml.com/)
 
-The Cedar Row ERP is live on Azure. Staff, customers, and vendors sign in with assigned accounts. [Azure landing zone](architecture/01-overview.png) · [Azure deployment evidence](../README.md#deployment-evidence)
+I deployed the Cedar Row ERP to Azure. Staff, customers, and vendors sign in to the live system with assigned accounts. [Azure landing zone](architecture/01-overview.png) · [Azure deployment evidence](../README.md#deployment-evidence)
 
 [Sales and payments](#sales-and-payments) · [Purchasing and inventory](#purchasing-and-inventory) · [Customer and vendor accounts](#customer-and-vendor-accounts) · [Projects, people, and support](#projects-people-and-support)
 

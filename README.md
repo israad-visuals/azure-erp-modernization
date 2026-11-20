@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Cedar Row Office Supply is a fictional wholesaler whose offices originally shared one on-premises ERP server. An outage could stop invoicing and leave staff without current stock counts. I moved the ERP to Azure with Terraform. The live ERP and its separate notification worker run on Azure Container Apps with managed MySQL and Service Bus. Invoicing continued during the worker outage drill. The recovery drills restored a deleted file and isolated MySQL records.
+I designed and deployed an Azure migration for Cedar Row Office Supply, a fictional wholesaler whose offices shared one on-premises ERP server. An outage could stop invoicing and leave staff without current stock counts. I used Terraform to deploy the ERP and its separate notification worker on Azure Container Apps with managed MySQL and Service Bus. I tested that invoicing continued during a worker outage and recovered a deleted file and isolated MySQL records.
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
@@ -16,9 +16,9 @@ Cedar Row Office Supply is a fictional wholesaler whose offices originally share
 
 ## Business context
 
-Cedar Row Office Supply is a fictional Toronto wholesaler with several sales offices and a shared warehouse. It sells paper, toner, and other office supplies to local businesses. Staff across the company rely on one ERP to check what is in stock, post invoices, and keep sales and accounting records in sync.
+I based the project on a Toronto office supply wholesaler with several sales offices and a shared warehouse. Staff use the ERP to check stock, post invoices, and keep sales and accounting records in sync across offices.
 
-The ERP includes customer relationship management (CRM) for sales activity and human resource management (HRM) for staffing, attendance, and leave.
+The ERP includes customer relationship management (CRM) for sales and customer follow-up, and human resource management (HRM) for staffing, attendance, and leave.
 
 ## Business problem
 
