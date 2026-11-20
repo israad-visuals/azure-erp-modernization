@@ -57,19 +57,19 @@ The [deployment evidence](#deployment-evidence) shows the notification outage an
 
 ## Live ERP showcase
 
-The live Cedar Row ERP runs on a VPS with fictional wholesale records. Use your assigned account to sign in. [Live ERP Deployed Access](https://erp.spiraml.com/)
+These screens show the live Cedar Row ERP on a VPS. The linked diagrams and deployment records show how I ran and validated the ERP on Azure. [Live ERP Deployed Access](https://erp.spiraml.com/)
 
-[Full screenshot walkthrough](docs/live-erp-showcase.md) · [Staff, customer and vendor views](docs/live-erp-showcase.md#customer-and-vendor-accounts)
+[Full screenshot walkthrough](docs/live-erp-showcase.md) · [Azure deployment and recovery evidence](#deployment-evidence)
 
-**Staff dashboard.** Customer and vendor payment totals, monthly trends, and recent expenses.
+**Staff dashboard.** Finance staff see customer and vendor payments in one place. In Azure, the browser reached the ERP on Azure Container Apps over HTTPS, and the app read business records from MySQL over a private network. [Network diagram](docs/architecture/02-network.png)
 
 ![Cedar Row finance dashboard with customer and vendor payment totals and charts](docs/assets/live-erp/account-dashboard.jpg)
 
-**Sale to payment.** Invoice `SI-2026-11-008` shows $623.76 paid and $0.00 due. The same payment appears in the customer’s account and as matching debit and credit entries in the ledger. [Paid invoice](docs/assets/live-erp/paid-sales-invoice.jpg) · [Customer view](docs/assets/live-erp/customer-invoices.jpg)
+**Sales and accounting.** The ledger shows how sales and payments affect accounts and stock. In the Azure deployment, posting an invoice saved the invoice, stock change, accounting entries, and a pending notification event in one MySQL transaction. A separate worker handled notifications through Service Bus, and invoice posting continued during the worker outage drill. [Invoice flow](docs/architecture/03-event.png) · [Outage drill](#notification-outage-and-recovery)
 
-![Ledger with the $623.76 customer payment, sales tax, and inventory entries](docs/assets/live-erp/ledger.jpg)
+![Ledger showing customer payments, sales tax, and inventory entries](docs/assets/live-erp/ledger.jpg)
 
-**Inventory.** Staff can check SKUs, stock quantities, and purchase and sale prices. [Purchase register](docs/assets/live-erp/purchase-invoices.jpg) · [Vendor view](docs/assets/live-erp/vendor-invoices.jpg)
+**Inventory.** The item catalog shows the stock counts staff rely on when fulfilling orders. In Azure, those records lived in MySQL and uploads used private Blob Storage. I recovered a deleted file and checked a logical database restore against the original records. [Recovery drills](#data-recovery-drills)
 
 ![Item catalog with office supply SKUs, purchase and sale prices, and stock on hand](docs/assets/live-erp/inventory.jpg)
 
