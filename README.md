@@ -6,7 +6,11 @@ I designed and deployed an Azure migration for Cedar Row Office Supply, a fictio
 
 ![Azure Cloud ERP · Enterprise Resource Planning Platform for Cedar Row Office Supply](docs/assets/cedar-row-erp-banner.png)
 
-[![Live ERP Deployed Access](docs/assets/live-erp-access.svg)](https://erp.spiraml.com/)
+<p align="center">
+  <a href="https://erp.spiraml.com/">
+    <img src="docs/assets/live-erp-access.svg" alt="Live ERP Deployed Access">
+  </a>
+</p>
 
 ![Project at a glance. Seven architecture views, four Azure resource groups, two release paths, and verified outage and data recovery drills.](docs/assets/project-path.svg)
 
