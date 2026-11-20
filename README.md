@@ -26,10 +26,10 @@ I moved the ERP and its database to Azure and deployed notifications as a separa
 
 ## My contribution
 
-- **Azure deployment.** I pushed both images to Azure Container Registry and deployed the ERP and notification worker independently to Azure Container Apps with Terraform.
-- **Architecture and security.** I implemented the invoice-to-notification flow with Azure Service Bus. I configured private access to MySQL and storage, with managed identities and scoped Key Vault permissions.
-- **Monitoring and resilience.** I configured Azure Monitor, Log Analytics, and three alert rules. During the worker outage drill, the ERP posted a $30 invoice and passed all eight readiness checks. After the worker restarted, the queued event produced one verified receipt.
-- **Data recovery.** I configured Blob versioning and MySQL backup retention. The drills restored a deleted blob from its previous version and three MySQL rows from a logical backup. Both restores matched the original SHA-256 checksums.
+- I designed the Azure infrastructure and set up private access to the database and file storage.
+- I used Terraform to deploy the ERP and its separate notification service to Azure.
+- I set up monitoring and tested that invoicing continued when the notification service went down.
+- I configured backups and tested recovery for deleted files and database records.
 
 ## Landing zone
 
