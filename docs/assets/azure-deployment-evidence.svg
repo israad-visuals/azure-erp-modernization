@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="204" viewBox="0 0 1200 204" role="img" aria-labelledby="title description">
+  <title id="title">Azure deployment evidence</title>
+  <desc id="description">View the Azure deployment screenshots.</desc>
+  <rect x="147" y="28" width="906" height="162" rx="24" fill="#206241"/>
+  <rect x="147" y="16" width="906" height="162" rx="24" fill="#baf5cd" stroke="#397956" stroke-width="3"/>
+  <text x="600" y="87" text-anchor="middle" fill="#123d31" font-family="Georgia, Times New Roman, serif" font-size="54">Azure deployment evidence</text>
+  <text x="586" y="137" text-anchor="middle" fill="#123d31" font-family="Arial, Helvetica, sans-serif" font-size="28" font-weight="bold">View screenshots</text>
+  <path d="M717 127h24m-9-9 9 9-9 9" fill="none" stroke="#123d31" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+</svg>
